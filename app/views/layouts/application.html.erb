@@ -15,17 +15,24 @@
   </head>
 
   <body>
-  <ul>
-    <li><a href="/">Sign in</a></li>
-    <li><a href="/">Sign up</a></li>
-    <li><a href="/">Home</a></li>
-  </ul>
-  <ul>
-    <li><a href="/movies">Movies</a></li>
-    <li><a href="/directors">Directors</a></li>
-    <li><a href="/actors">Actors</a></li>
-    <li><a href="/characters">Characters</a></li>
-  </ul>
+    <ul>
+      <% if session.fetch(:user_id).present? %>
+        <%user_id = session.fetch(:user_id)%>
+        <%user = User.where({:id => user_id}).first%>
+        <li><%=user.first_name%> <%=user.last_name%></li>
+        <li><a href="/user_sign_out">Sign out</a></li>
+      <% else %>
+        <li><a href="/user_sign_up">Sign up</a></li>
+        <li><a href="/user_sign_in">Sign in</a></li>
+      <% end %>
+    </ul>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/movies">Movies</a></li>
+      <li><a href="/directors">Directors</a></li>
+      <li><a href="/actors">Actors</a></li>
+      <li><a href="/characters">Characters</a></li>
+    </ul>
     <%= yield %>
   </body>
 </html>
