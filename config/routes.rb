@@ -53,6 +53,8 @@ Rails.application.routes.draw do
 
   # CREATE
   post("/insert_movie", { :controller => "movies", :action => "create" })
+  post("/insert_bookmark_for_movie", { :controller => "movies", :action => "create_bookmark" })
+
 
   # READ
   get("/movies", { :controller => "movies", :action => "index" })

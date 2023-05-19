@@ -10,5 +10,5 @@
 #
 class Bookmark < ApplicationRecord
   belongs_to :users
-  belogns_to :movies
+  belongs_to :movies
 end

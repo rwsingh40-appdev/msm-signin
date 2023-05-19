@@ -61,4 +61,17 @@ class MoviesController < ApplicationController
 
     redirect_to("/movies", { :notice => "Movie deleted successfully."} )
   end
+
+  def create_bookmark
+    the_bookmark = Bookmark.new
+    the_bookmark.user_id = session.fetch(:user_id)
+    the_bookmark.movie_id = params.fetch("query_movie_id")
+
+    if the_bookmark.valid?
+      the_bookmark.save
+      redirect_to("/movies/#{the_bookmark.movie_id}", { :notice => "Bookmark created successfully." })
+    else
+      redirect_to("/movies/#{the_bookmark.movie_id}", { :alert => the_bookmark.errors.full_messages.to_sentence })
+    end
+  end
 end
