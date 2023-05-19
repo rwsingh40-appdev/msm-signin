@@ -32,6 +32,9 @@
       <li><a href="/directors">Directors</a></li>
       <li><a href="/actors">Actors</a></li>
       <li><a href="/characters">Characters</a></li>
+      <% if session.fetch(:user_id).present? %>
+        <li><a href="/bookmarks">My Bookmarks</a></li>
+      <% end %>
     </ul>
     <p style = "color: green"> <%= notice %></p>
     <p style = "color: red"> <%= alert %></p>

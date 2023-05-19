@@ -1,10 +1,15 @@
 class BookmarksController < ApplicationController
+    
   def index
-    matching_bookmarks = Bookmark.all
+    if @current_user.id.present?
+      matching_bookmarks = @current_user.bookmarks
 
-    @list_of_bookmarks = matching_bookmarks.order({ :created_at => :desc })
+      @list_of_bookmarks = matching_bookmarks.order({ :created_at => :desc })
 
-    render({ :template => "bookmarks/index.html.erb" })
+      render({ :template => "bookmarks/index.html.erb" })
+    else
+      render({ :template => "/public/404.html" })
+    end
   end
 
   def show
@@ -39,7 +44,7 @@ class BookmarksController < ApplicationController
 
     if the_bookmark.valid?
       the_bookmark.save
-      redirect_to("/bookmarks/#{the_bookmark.id}", { :notice => "Bookmark updated successfully."} )
+      redirect_to("/bookmarks/#{the_bookmark.id}", { :notice => "Bookmark updated successfully." })
     else
       redirect_to("/bookmarks/#{the_bookmark.id}", { :alert => the_bookmark.errors.full_messages.to_sentence })
     end
@@ -51,6 +56,6 @@ class BookmarksController < ApplicationController
 
     the_bookmark.destroy
 
-    redirect_to("/bookmarks", { :notice => "Bookmark deleted successfully."} )
+    redirect_to("/bookmarks", { :notice => "Bookmark deleted successfully." })
   end
 end
